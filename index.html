@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperWeb Agency | Modern Websites That Convert</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --electric-blue: #0c0c2e;
+            --deep-purple: #1a1a3e;
+            --neon-blue: #00f3ff;
+            --neon-purple: #b967ff;
+            --neon-green: #00ff9d;
+            --neon-fuchsia: #ff00c8;
+            --text-light: #ffffff;
+            --card-bg: rgba(26, 26, 62, 0.7);
+            --glow-blue: 0 0 10px rgba(0, 243, 255, 0.7);
+            --glow-purple: 0 0 10px rgba(183, 103, 255, 0.7);
+        }
+
+        body {
+            background-color: var(--electric-blue);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--electric-blue);
+            box-shadow: var(--glow-blue);
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--neon-blue);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover:after {
+            width: 100%;
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            color: var(--neon-blue);
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover:after {
+            width: 0%;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--neon-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success/Error Messages */
+        .form-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .form-message.success {
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .form-message.error {
+            background: rgba(255, 0, 200, 0.1);
+            border: 1px solid var(--neon-fuchsia);
+            color: var(--neon-fuchsia);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(12, 12, 46, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--electric-blue) 0%, var(--deep-purple) 100%);
+            padding-top: 80px;
+           
+        }
+
+        .network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--deep-purple);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--electric-blue);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05), rgba(183, 103, 255, 0.05));
+            z-index: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+        }
+
+        .service-image {
+            height: 180px;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            border-radius: 8px;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.05);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background-color: var(--deep-purple);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+             margin-bottom: 40px; /* Added margin to create space for the button */
+        }
+
+        .portfolio-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 243, 255, 0.3);
+        }
+
+        .portfolio-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--deep-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-content {
+            padding: 20px;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .portfolio-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+           /* See More Button */
+        .portfolio-cta {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: var(--electric-blue);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--neon-blue);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05), rgba(183, 103, 255, 0.05));
+            z-index: 0;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+        }
+
+        .pricing-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--neon-blue);
+            position: relative;
+            z-index: 1;
+            text-shadow: var(--glow-blue);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-features i {
+            color: var(--neon-green);
+            margin-right: 10px;
+        }
+
+        .pricing-features .not-included {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pricing-features .not-included i {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            background-color: var(--deep-purple);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--neon-green);
+        }
+
+        .feature-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .feature-item p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--electric-blue);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        .testimonial-text:before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--neon-blue);
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            opacity: 0.5;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--neon-purple);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--electric-blue);
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .author-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            background-color: var(--deep-purple);
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-align: left;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(12, 12, 46, 0.5);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            color: var(--text-light);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--electric-blue);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(0, 243, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 243, 255, 0.1);
+            border-radius: 50%;
+            color: var(--neon-blue);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .social-links a:hover {
+            background: var(--neon-blue);
+            color: var(--electric-blue);
+            box-shadow: var(--glow-blue);
+        }
+
+        .footer-cta {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* WhatsApp Chatbot */
+        .whatsapp-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-button {
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+
+        .chatbot-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 300px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            overflow: hidden;
+            transform: scale(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+            opacity: 0;
+        }
+
+        .chatbot-popup.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-header i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .chatbot-header h3 {
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .chatbot-body {
+            padding: 20px;
+        }
+
+        .chatbot-message {
+            background: rgba(12, 12, 46, 0.5);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .chatbot-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chatbot-option {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-option:hover {
+            background: rgba(0, 243, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .chatbot-footer {
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .pricing-card.popular:hover {
+                transform: translateY(-10px);
+            }
+            
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: rgba(12, 12, 46, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                transition: left 0.3s ease;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .chatbot-popup {
+                width: 280px;
+                right: -10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .services-grid, .portfolio-grid, .testimonials-grid, .features-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-container {
+                padding: 30px 20px;
+            }
+            
+            .service-image {
+                height: 150px;
+            }
+            
+            .whatsapp-chatbot {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+            }
+            
+            .chatbot-popup {
+                width: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">HYPERWEB</a>
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="portfoliopage.html">Portfolio</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#cta">Contact</a></li>
+                    <li><a href="legal.html">Legal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <canvas class="network-canvas" id="networkCanvas"></canvas>
+        <div class="container">
+            <div class="hero-content">
+                <h1>We Build <span class="highlight">Modern Websites</span> That Convert</h1>
+                <p class="tagline">Professional web design solutions for businesses ready to grow online</p>
+                <a href="#cta" class="btn">Get a Free Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <p>HyperWeb Agency specializes in creating stunning, high-performance websites for small businesses, startups, and entrepreneurs. We combine modern design with conversion-focused strategies to help our clients stand out online and achieve their business goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Core Services</h2>
+                <p>Comprehensive web solutions tailored to your business needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Web Design">
+                    </div>
+                    <h3>Web Design</h3>
+                    <p>Custom, responsive websites designed to engage visitors and drive conversions with modern aesthetics and intuitive user experiences.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="E-commerce">
+                    </div>
+                    <h3>E-commerce</h3>
+                    <p>Complete online store solutions with secure payment processing, inventory management, and mobile-optimized shopping experiences.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Branding">
+                    </div>
+                    <h3>Branding</h3>
+                    <p>Cohesive visual identity development including logo design, color schemes, and brand guidelines to establish your market presence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Projects</h2>
+                <p>See examples of our recent web design work</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="E-commerce Website">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Modern E-commerce Store</h3>
+                        <p>Fully responsive online store with product filtering and secure checkout</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Corporate Website">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Corporate Business Site</h3>
+                        <p>Professional website with services showcase and team profiles</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Portfolio Website">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Creative Portfolio</h3>
+                        <p>Artist portfolio with interactive gallery and contact forms</p>
+                    </div>
+                </div>
+            </div>
+             <!-- Added See More Button -->
+            <div class="portfolio-cta">
+                <a href="portfoliopage.html" class="btn">See More</a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Web Design Packages</h2>
+                <p>Choose the perfect package for your business needs</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Basic Package</h3>
+                    <div class="price">R1,499 <span>one-time</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 3-Page Custom Website</li>
+                        <li><i class="fas fa-check"></i> Responsive Design</li>
+                        <li><i class="fas fa-check"></i> Basic SEO Setup</li>
+                        <li><i class="fas fa-check"></i> Contact Form</li>
+                        <li class="not-included"><i class="fas fa-times"></i> E-commerce Functionality</li>
+                        <li class="not-included"><i class="fas fa-times"></i> Content Management System</li>
+                    </ul>
+                    <a href="#cta" class="btn">Get Started</a>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div class="pricing-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Standard Package</h3>
+                    <div class="price">R3,499 <span>one-time</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 5-Page Custom Website</li>
+                        <li><i class="fas fa-check"></i> Responsive Design</li>
+                        <li><i class="fas fa-check"></i> Advanced SEO Setup</li>
+                        <li><i class="fas fa-check"></i> Contact & Inquiry Forms</li>
+                        <li><i class="fas fa-check"></i> Basic Content Management</li>
+                        <li class="not-included"><i class="fas fa-times"></i> E-commerce Functionality</li>
+                    </ul>
+                    <a href="#cta" class="btn">Get Started</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Premium Package</h3>
+                    <div class="price">R10,499 <span>one-time</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 8+ Page Custom Website</li>
+                        <li><i class="fas fa-check"></i> Fully Responsive Design</li>
+                        <li><i class="fas fa-check"></i> Comprehensive SEO Setup</li>
+                        <li><i class="fas fa-check"></i> E-commerce Ready</li>
+                        <li><i class="fas fa-check"></i> Advanced Content Management</li>
+                        <li><i class="fas fa-check"></i> Ongoing Support (1 month)</li>
+                    </ul>
+                    <a href="#cta" class="btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Us</h2>
+                <p>We deliver exceptional value with every project</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Optimized for speed and performance</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Fully Responsive</h3>
+                    <p>Perfect on all devices and screen sizes</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>SEO-Ready</h3>
+                    <p>Built to rank well in search engines</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Affordable</h3>
+                    <p>Competitive pricing for all budgets</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Client Testimonials</h2>
+                <p>What our clients say about working with us</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">HyperWeb Agency transformed our online presence completely. Our new website not only looks amazing but has increased our conversions by 40%.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>CEO, TechSolutions Inc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">The team at HyperWeb delivered beyond our expectations. Their attention to detail and technical expertise made the entire process smooth and efficient.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MJ</div>
+                        <div class="author-info">
+                            <h4>Michael Johnson</h4>
+                            <p>Founder, CreativeMinds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Working with HyperWeb was a game-changer for our business. They understood our vision and created a website that perfectly represents our brand.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EW</div>
+                        <div class="author-info">
+                            <h4>Emily Wilson</h4>
+                            <p>Marketing Director, GlobalBrands</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <div class="cta-container">
+                <h2>Let's Build Your Website</h2>
+                <p>Ready to take your online presence to the next level? Contact us today for a free consultation.</p>
+                <form class="contact-form" id="quoteForm">
+                    <div id="formMessage"></div>
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="package">Package Interest *</label>
+                        <select id="package" class="form-control" required>
+                            <option value="">Select a package</option>
+                            <option value="basic">Basic Package (R1500)</option>
+                            <option value="standard">Standard Package (R3,000)</option>
+                            <option value="premium">Premium Package (R10,000)</option>
+                            <option value="custom">Custom Solution</option>
+                            <option value="not-sure">Not Sure - Need Advice</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="budget">Project Budget</label>
+                        <select id="budget" class="form-control">
+                            <option value="">Select budget range</option>
+                            <option value="under-R1500">Under R1,500</option>
+                            <option value="1500-3000">R1,500 - R3,000</option>
+                            <option value="3000-5000">R3,000 - R5,000</option>
+                            <option value="5000-plus">R5,000+</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Project Details *</label>
+                        <textarea id="message" class="form-control" placeholder="Tell us about your project, timeline, and any specific requirements..." required></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn" id="submitBtn">
+                            <span class="btn-text">Get a Free Quote</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>HyperWeb Agency</h3>
+                    <p>Professional web design that converts. Building the digital presence of tomorrow.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="portfoliopage.html">Portfolio</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="legal.html">Legal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> Onyekachi1992@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +27604881413</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Global Network Operations</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="https://x.com/hyperweb_1"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/hyperweb25"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/onyeka30"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-cta">
+                <a href="#cta" class="btn">Get a Free Quote</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 HyperWeb Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Chatbot -->
+    <div class="whatsapp-chatbot">
+        <div class="whatsapp-button" id="whatsappButton">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="chatbot-popup" id="chatbotPopup">
+            <div class="chatbot-header">
+                <i class="fab fa-whatsapp"></i>
+                <h3>Chat with us on WhatsApp</h3>
+            </div>
+            <div class="chatbot-body">
+                <div class="chatbot-message">
+                    Hi! 👋 I'm here to help you with your web design needs. How can I assist you today?
+                </div>
+                <div class="chatbot-options">
+                    <div class="chatbot-option" data-message="I'd like to get a quote for a website">
+                        Get a Quote
+                    </div>
+                    <div class="chatbot-option" data-message="I have questions about your services">
+                        Ask About Services
+                    </div>
+                    <div class="chatbot-option" data-message="I'd like to see more portfolio examples">
+                        View Portfolio
+                    </div>
+                    <div class="chatbot-option" data-message="I need help with an existing project">
+                        Project Support
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-footer">
+                Typically replies within 30 minutes
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize EmailJS
+        (function() {
+            // Replace these with your actual EmailJS credentials
+            emailjs.init("wa0CzBL-AIcx8XQ5w"); // Get from EmailJS dashboard
+        })();
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navItems = document.querySelectorAll('.nav-links a');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission with EmailJS
+        const quoteForm = document.getElementById('quoteForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const formMessage = document.getElementById('formMessage');
+        
+        quoteForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span> Sending...';
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value || 'Not provided',
+                company: document.getElementById('company').value || 'Not provided',
+                package: document.getElementById('package').value,
+                budget: document.getElementById('budget').value || 'Not specified',
+                message: document.getElementById('message').value,
+                timestamp: new Date().toLocaleString(),
+                page: window.location.href
+            };
+            
+            try {
+                // Send email using EmailJS
+                // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+                const response = await emailjs.send(
+                    'service_c1jss3u', // Service ID from EmailJS
+                    'template_jkufoyi', // Template ID from EmailJS
+                    formData
+                );
+                
+                // Show success message
+                showFormMessage('Thank you! Your inquiry has been sent successfully. We will get back to you within 24 hours.', 'success');
+                
+                // Reset form
+                quoteForm.reset();
+                
+            } catch (error) {
+                console.error('Email sending failed:', error);
+                showFormMessage('Sorry, there was an error sending your message. Please try again or contact us directly at contact@hyperweb.agency', 'error');
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                btnText.textContent = 'Get a Free Quote';
+            }
+        });
+        
+        // Function to show form messages
+        function showFormMessage(message, type) {
+            formMessage.innerHTML = `<div class="form-message ${type}">${message}</div>`;
+            
+            // Scroll to message
+            formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Auto-hide success messages after 10 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    formMessage.innerHTML = '';
+                }, 10000);
+            }
+        }
+        
+        // WhatsApp Chatbot functionality
+        const whatsappButton = document.getElementById('whatsappButton');
+        const chatbotPopup = document.getElementById('chatbotPopup');
+        
+        // Toggle chatbot popup
+        whatsappButton.addEventListener('click', () => {
+            chatbotPopup.classList.toggle('active');
+        });
+        
+        // Close chatbot when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!whatsappButton.contains(e.target) && !chatbotPopup.contains(e.target)) {
+                chatbotPopup.classList.remove('active');
+            }
+        });
+        
+        // Chatbot options click handler
+        const chatbotOptions = document.querySelectorAll('.chatbot-option');
+        chatbotOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const message = option.getAttribute('data-message');
+                openWhatsApp(message);
+            });
+        });
+        
+        // Function to open WhatsApp with pre-filled message
+        function openWhatsApp(message) {
+            // Replace with your actual WhatsApp number (without +, spaces, or special characters)
+            const phoneNumber = "+27604881413";
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${+27604881413}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in a new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Close the chatbot popup
+            chatbotPopup.classList.remove('active');
+        }
+        
+        // Network visualization
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Node class
+        class Node {
+            constructor(x, y, radius, color, speed) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.speed = speed;
+                this.direction = Math.random() * Math.PI * 2;
+                this.pulseOffset = Math.random() * Math.PI * 2;
+            }
+            
+            update() {
+                // Move node
+                this.x += Math.cos(this.direction) * this.speed;
+                this.y += Math.sin(this.direction) * this.speed;
+                
+                // Bounce off edges
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.direction = Math.PI - this.direction;
+                }
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.direction = -this.direction;
+                }
+                
+                // Random direction changes
+                if (Math.random() < 0.02) {
+                    this.direction += (Math.random() - 0.5) * 0.5;
+                }
+            }
+            
+            draw() {
+                // Pulsing effect
+                const pulse = Math.sin(Date.now() * 0.002 + this.pulseOffset) * 0.3 + 0.7;
+                const currentRadius = this.radius * pulse;
+                
+                // Draw node
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, currentRadius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                
+                // Glow effect
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, currentRadius * 2, 0, Math.PI * 2);
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, currentRadius,
+                    this.x, this.y, currentRadius * 2
+                );
+                gradient.addColorStop(0, this.color);
+                gradient.addColorStop(1, 'transparent');
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        }
+        
+        // Connection class
+        class Connection {
+            constructor(node1, node2) {
+                this.node1 = node1;
+                this.node2 = node2;
+                this.length = Math.sqrt(
+                    Math.pow(node2.x - node1.x, 2) + 
+                    Math.pow(node2.y - node1.y, 2)
+                );
+                this.active = false;
+                this.pulsePhase = Math.random() * Math.PI * 2;
+            }
+            
+            update() {
+                // Update length
+                this.length = Math.sqrt(
+                    Math.pow(this.node2.x - this.node1.x, 2) + 
+                    Math.pow(this.node2.y - this.node1.y, 2)
+                );
+                
+                // Activate if nodes are close enough
+                this.active = this.length < 250;
+            }
+            
+            draw() {
+                if (!this.active) return;
+                
+                // Calculate line properties
+                const pulse = Math.sin(Date.now() * 0.005 + this.pulsePhase) * 0.5 + 0.5;
+                const alpha = 0.3 + pulse * 0.4;
+                
+                // Draw connection line
+                ctx.beginPath();
+                ctx.moveTo(this.node1.x, this.node1.y);
+                ctx.lineTo(this.node2.x, this.node2.y);
+                ctx.strokeStyle = `rgba(0, 243, 255, ${alpha})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                
+                // Draw data flow along the connection
+                const flowPos = (Date.now() * 0.005 + this.pulsePhase) % 1;
+                const flowX = this.node1.x + (this.node2.x - this.node1.x) * flowPos;
+                const flowY = this.node1.y + (this.node2.y - this.node1.y) * flowPos;
+                
+                ctx.beginPath();
+                ctx.arc(flowX, flowY, 3, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(183, 103, 255, ${pulse})`;
+                ctx.fill();
+            }
+        }
+        
+        // Create nodes
+        const nodes = [];
+        const connections = [];
+        const nodeColors = [
+            'rgba(0, 243, 255, 0.8)',
+            'rgba(183, 103, 255, 0.8)',
+            'rgba(0, 255, 157, 0.8)',
+            'rgba(255, 0, 200, 0.8)'
+        ];
+        
+        // Create nodes in a circular pattern (suggesting a globe)
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(canvas.width, canvas.height) * 0.4;
+        
+        for (let i = 0; i < 50; i++) {
+            // Distribute some nodes in a sphere pattern
+            if (i < 30) {
+                const angle = (i / 30) * Math.PI * 2;
+                const nodeRadius = radius * (0.7 + Math.random() * 0.3);
+                const x = centerX + Math.cos(angle) * nodeRadius;
+                const y = centerY + Math.sin(angle) * nodeRadius;
+                
+                nodes.push(new Node(
+                    x, y,
+                    3 + Math.random() * 4,
+                    nodeColors[Math.floor(Math.random() * nodeColors.length)],
+                    0.2 + Math.random() * 0.3
+                ));
+            } else {
+                // Add some random nodes
+                nodes.push(new Node(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    2 + Math.random() * 3,
+                    nodeColors[Math.floor(Math.random() * nodeColors.length)],
+                    0.5 + Math.random() * 0.5
+                ));
+            }
+        }
+        
+        // Create connections between nearby nodes
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                connections.push(new Connection(nodes[i], nodes[j]));
+            }
+        }
+        
+        // Animation loop
+        function animate() {
+            // Clear canvas with a subtle fade effect
+            ctx.fillStyle = 'rgba(12, 12, 46, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw subtle geometric background pattern
+            drawGeometricPattern();
+            
+            // Update and draw connections
+            connections.forEach(connection => {
+                connection.update();
+                connection.draw();
+            });
+            
+            // Update and draw nodes
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Draw subtle geometric background pattern
+        function drawGeometricPattern() {
+            const time = Date.now() * 0.001;
+            const patternSize = 100;
+            
+            for (let x = 0; x < canvas.width; x += patternSize) {
+                for (let y = 0; y < canvas.height; y += patternSize) {
+                    const pulse = Math.sin(time + x * 0.01 + y * 0.01) * 0.1 + 0.9;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + patternSize, y);
+                    ctx.lineTo(x + patternSize/2, y + patternSize/2);
+                    ctx.closePath();
+                    
+                    ctx.strokeStyle = `rgba(0, 243, 255, ${0.02 * pulse})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>
